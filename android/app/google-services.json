@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "644033659154",
+    "project_id": "dealapptestproject",
+    "storage_bucket": "dealapptestproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644033659154:android:8c84ed1c8f82e0e8c973cb",
+        "android_client_info": {
+          "package_name": "com.deal_app_test_project.deal_app_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUWmyJXYipo31kzN-n5QFQRtAkeTumwHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
