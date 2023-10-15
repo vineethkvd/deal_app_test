@@ -1,4 +1,4 @@
-import 'package:deal_app_test/views/account_screen.dart';
+import 'package:deal_app_test/views/cart_screen.dart';
 import 'package:deal_app_test/views/notification_screen.dart';
 import 'package:deal_app_test/views/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -194,8 +194,8 @@ class _HomePageState extends State<HomePage> {
                 icon: Image(
                     width: 20,
                     height: 20,
-                    image: AssetImage('asset/images/user.png')),
-                label: "Account",
+                    image: AssetImage('asset/images/shopping-cart.png')),
+                label: "Cart",
               ),
               BottomNavigationBarItem(
                 icon: Image(

@@ -17,15 +17,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation:0,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation:0,
+      // ),
       body: Container(
 
 
         height:size.height ,
         width: size.width,
+        decoration: BoxDecoration(color: Colors.white),
 
       ),
 
