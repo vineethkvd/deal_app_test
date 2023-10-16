@@ -21,13 +21,15 @@ class _NotificationScreenState extends State<NotificationScreen> {
       //   backgroundColor: Colors.transparent,
       //   elevation:0,
       // ),
-      body: Container(
+      body: SingleChildScrollView(
+        child: Container(
 
 
-        height:size.height ,
-        width: size.width,
-        decoration: BoxDecoration(color: Colors.white),
+          height:size.height ,
+          width: size.width,
+          decoration: BoxDecoration(color: Colors.white),
 
+        ),
       ),
 
 

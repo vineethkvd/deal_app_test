@@ -22,170 +22,172 @@ class _HomeScreenState extends State<HomeScreen> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        body: Container(
-          height: size.height,
-          width: size.width,
-          // padding: EdgeInsets.only(top: 65, bottom: 20, left: 20, right: 20),
-          decoration: BoxDecoration(color: Colors.white),
-          child: Stack(children: [
-            Positioned(
-              top: 5,
-              left: 10,
-              right: 10,
-              bottom: 20,
-              child: Container(
-                height: 20,
-                // color: Colors.red,
-                child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment(-0.96, 0),
-                      child: Text("Trending deals",
-                          style: TextStyle(
-                            fontFamily: 'Poppins-SemiBold',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
-                            color: Color(0xFF3C3268),
-                          )),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        print(currentIndex);
-                      },
-                      child: Container(
-                        child: CarouselSlider(
-                          items: imgList.map((item) {
-                            return Container(
-                              width: double.infinity,
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.network(item,
-                                      fit: BoxFit.cover,
-                                      width: double.infinity,
-                                      height: 500),
+        body: SingleChildScrollView(
+          child: Container(
+            height: size.height,
+            width: size.width,
+            // padding: EdgeInsets.only(top: 65, bottom: 20, left: 20, right: 20),
+            decoration: BoxDecoration(color: Colors.white),
+            child: Stack(children: [
+              Positioned(
+                top: 5,
+                left: 10,
+                right: 10,
+                bottom: 20,
+                child: Container(
+                  height: 20,
+                  // color: Colors.red,
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment(-0.96, 0),
+                        child: Text("Trending deals",
+                            style: TextStyle(
+                              fontFamily: 'Poppins-SemiBold',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                              color: Color(0xFF3C3268),
+                            )),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          print(currentIndex);
+                        },
+                        child: Container(
+                          child: CarouselSlider(
+                            items: imgList.map((item) {
+                              return Container(
+                                width: double.infinity,
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.network(item,
+                                        fit: BoxFit.cover,
+                                        width: double.infinity,
+                                        height: 500),
+                                  ),
                                 ),
-                              ),
-                            );
-                          }).toList(),
-                          carouselController: carouselController,
-                          options: CarouselOptions(
-                            scrollPhysics: const BouncingScrollPhysics(),
-                            autoPlay: true,
-                            aspectRatio: 2.0,
-                            viewportFraction: 1,
-                            onPageChanged: (index, reason) {
-                              setState(() {
-                                currentIndex = index;
-                              });
-                            },
+                              );
+                            }).toList(),
+                            carouselController: carouselController,
+                            options: CarouselOptions(
+                              scrollPhysics: const BouncingScrollPhysics(),
+                              autoPlay: true,
+                              aspectRatio: 2.0,
+                              viewportFraction: 1,
+                              onPageChanged: (index, reason) {
+                                setState(() {
+                                  currentIndex = index;
+                                });
+                              },
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: imgList.asMap().entries.map((entry) {
-                        return GestureDetector(
-                          onTap: () => carouselController.animateToPage(entry.key),
-                          child: Container(
-                            width: currentIndex == entry.key ? 17 : 7,
-                            height: 7.0,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 3.0,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: imgList.asMap().entries.map((entry) {
+                          return GestureDetector(
+                            onTap: () => carouselController.animateToPage(entry.key),
+                            child: Container(
+                              width: currentIndex == entry.key ? 17 : 7,
+                              height: 7.0,
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 3.0,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: currentIndex == entry.key
+                                    ? Colors.red
+                                    : Colors.teal,
+                              ),
                             ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: currentIndex == entry.key
-                                  ? Colors.red
-                                  : Colors.teal,
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
+                          );
+                        }).toList(),
+                      ),
 
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
 
-           Positioned(
-             top: 240,
-              left: 20,
-              bottom: 0,
-              right: 0,
-              child: Container(
-                height: 20,
-                // color: Colors.red,
-                child: Text("All deals",
-                    style: TextStyle(
-                      fontFamily: 'Poppins-SemiBold',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                      color: Color(0xFF3C3268),
-                    )),
-              ),
-            ),
-            Positioned(
-                left: 10,
-                right: 10,
-                top: 280,
+             Positioned(
+               top: 240,
+                left: 20,
                 bottom: 0,
+                right: 0,
                 child: Container(
+                  height: 20,
+                  // color: Colors.red,
+                  child: Text("All deals",
+                      style: TextStyle(
+                        fontFamily: 'Poppins-SemiBold',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                        color: Color(0xFF3C3268),
+                      )),
+                ),
+              ),
+              Positioned(
+                  left: 10,
+                  right: 10,
+                  top: 280,
+                  bottom: 0,
+                  child: Container(
 
-                  child: GridView.builder(
-                    shrinkWrap: false,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    scrollDirection: Axis.vertical,
-                    padding: EdgeInsets.all(0),
-                    itemCount: 24,
-                    itemBuilder: (context, index) {
-                      return Container(
-                          // padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
-                            border: Border.all(
-                              color: Color(0x91595959),
-                              width: 2.0,
+                    child: GridView.builder(
+                      shrinkWrap: false,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      scrollDirection: Axis.vertical,
+                      padding: EdgeInsets.all(0),
+                      itemCount: 24,
+                      itemBuilder: (context, index) {
+                        return Container(
+                            // padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                              border: Border.all(
+                                color: Color(0x91595959),
+                                width: 2.0,
+                              ),
                             ),
-                          ),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Container(
-                                    height: 95,
-                                    width: 140,
-                                    // color: Colors.red,
-                                    child: Center(
-                                      child: Image(
-                                        fit: BoxFit.cover,
-                                          image: AssetImage(
-                                              'asset/images/acerlap.png')),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Container(
+                                      height: 95,
+                                      width: 140,
+                                      // color: Colors.red,
+                                      child: Center(
+                                        child: Image(
+                                          fit: BoxFit.cover,
+                                            image: AssetImage(
+                                                'asset/images/acerlap.png')),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                // SizedBox(height: 7,),
-                                ListTile(
-                                  title: Text("Lenovo laptop"),
-                                  subtitle: Text("₹3200 only"),
-                                )
-                              ],
-                            ),
-                          ));
-                    },
-                  ),
-                ))
-          ]),
+                                  // SizedBox(height: 7,),
+                                  ListTile(
+                                    title: Text("Lenovo laptop"),
+                                    subtitle: Text("₹3200 only"),
+                                  )
+                                ],
+                              ),
+                            ));
+                      },
+                    ),
+                  ))
+            ]),
+          ),
         ),
       ),
     );
