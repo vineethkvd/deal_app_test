@@ -1,10 +1,12 @@
 import 'package:deal_app_test/views/cart_screen.dart';
+import 'package:deal_app_test/views/login_screen.dart';
 import 'package:deal_app_test/views/notification_screen.dart';
 import 'package:deal_app_test/views/settings_screen.dart';
+import 'package:deal_app_test/views/welcome_screen.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../modal/authentication/google_signin_page.dart';
+import '../services/authFunctionGoogle.dart';
 import 'home_screen.dart';
 
 class HomePage extends StatefulWidget {
@@ -48,7 +50,7 @@ class _HomePageState extends State<HomePage> {
     return SafeArea(
       child: Scaffold(
         appBar: EasySearchBar(
-          backgroundColor: Colors.white,
+            backgroundColor: Colors.white,
             elevation: 0,
             title: Container(
               child: Row(
@@ -77,10 +79,9 @@ class _HomePageState extends State<HomePage> {
             ),
             onSearch: (value) => setState(() => searchValue = value),
             suggestions: _suggestions),
-
         drawer: Drawer(
           child: Container(
-             color: Colors.white,
+            color: Colors.white,
             child: Column(
               children: [
                 UserAccountsDrawerHeader(
@@ -95,10 +96,10 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 16,
                       )),
                   currentAccountPicture: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      " imageUrl!",
-                    ),
-                  ),
+                      // backgroundImage: NetworkImage(
+                      //   " imageUrl!",
+                      // ),
+                      ),
                 ),
                 ListTile(
                     title: Text("name!",
@@ -145,10 +146,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 ListTile(
-                    onTap: () {
+                    onTap: () async {
                       // signOutGoogle();
-                      // Navigator.of(context)
-                      //     .pushNamedAndRemoveUntil('/loginpage', (route) => false);
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => WelcomeScreen(),
+                      ));
                     },
                     title: Text("Logout"),
                     leading: Icon(Icons.logout_rounded))

@@ -1,9 +1,12 @@
+import 'package:deal_app_test/views/home_page.dart';
 import 'package:deal_app_test/views/splash_screen.dart';
-import 'package:deal_app_test/views/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -12,17 +15,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
     return MaterialApp(
-      title: 'Deal App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-        useMaterial3: true,
-      ),
-      home:SplashScreen() ,
-    );
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return HomePage();
+            } else {
+              return SplashScreen();
+            }
+          },
+        ));
   }
 }
