@@ -1,5 +1,8 @@
-import 'package:deal_app_test/views/home_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../services/authFunctionGoogle.dart';
+import '../services/authFunctionsEmailPassword.dart';
+import 'home_page.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -9,15 +12,14 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String email = '';
+  String password = '';
+  String fullname = '';
+  bool login = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final _formKey = GlobalKey<FormState>();
-
-    String email = '';
-    String password = '';
-    String fullname = '';
-    bool login = false;
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
@@ -88,8 +90,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextFormField(
+                            key: ValueKey('fullname'),
+                            onSaved: (newValue) {
+                              setState(() {
+                                fullname = newValue!;
+                              });
+                            },
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Name should not be empty";
+                              }
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(),
+                                hintText: "Enter the name",
                                 label: Text(
                                   "Name",
                                   style: TextStyle(
@@ -101,7 +115,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 10,
                           ),
                           TextFormField(
+                            key: ValueKey('email'),
+                            onSaved: (newValue) {
+                              setState(() {
+                                email = newValue!;
+                              });
+                            },
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter your email";
+                              } else if (!value.contains("@gmail")) {
+                                return "please enter a valid email";
+                              } else {
+                                return null;
+                              }
+                            },
                             decoration: InputDecoration(
+                                hintText: "Enter the email",
                                 border: OutlineInputBorder(),
                                 label: Text(
                                   "Email",
@@ -114,6 +144,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 10,
                           ),
                           TextFormField(
+                            key: ValueKey('password'),
+                            onSaved: (newValue) {
+                              setState(() {
+                                password = newValue!;
+                              });
+                            },
+                            validator: (value) {
+                              RegExp regex = RegExp(
+                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                              if (value!.isEmpty) {
+                                return "Please enter your password";
+                              } else {
+                                if (!regex.hasMatch(value)) {
+                                  return 'Enter valid password';
+                                } else {
+                                  return null;
+                                }
+                              }
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 hintText: "Enter the password",
@@ -128,10 +177,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 15,
                           ),
                           ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => HomeScreen(),
-                                ));
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  _formKey.currentState!.save();
+                                  AuthServices.signupUser(
+                                      email, password, fullname, context);
+                                }
                               },
                               style: ButtonStyle(
                                   minimumSize: MaterialStatePropertyAll(
@@ -186,17 +237,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    signInWithGoogle().then((result) {
+                                      if (result != null) {
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                          builder: (context) => HomePage(),
+                                        ));
+                                      }
+                                    });
+                                    print("clicked");
+                                  },
                                   icon: Image.asset(
                                       width: 60,
                                       height: 30,
                                       'asset/images/google.png')),
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset(
-                                      width: 60,
-                                      height: 30,
-                                      'asset/images/facebook.png'))
                             ],
                           )
                         ],
