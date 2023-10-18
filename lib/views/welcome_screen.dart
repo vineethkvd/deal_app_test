@@ -26,7 +26,7 @@ class WelcomeScreen extends StatelessWidget {
             child: Stack(children: [
               Positioned(
                   top: 0,
-                  left: 115,
+                  left: 220,
                   child: Image.asset('asset/images/Ellipse 1.png')),
               Align(
                 alignment: Alignment(0, -1),

@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Stack(children: [
               Positioned(
                   top: 0,
-                  left: 115,
+                  left: 220,
                   child: Image.asset('asset/images/Ellipse 1.png')),
               Align(
                 alignment: Alignment(0, -0.88),
@@ -126,8 +126,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               ));
                             },
                             style: ButtonStyle(
-                                minimumSize:
-                                    MaterialStatePropertyAll(Size(345, 46)),
+                                minimumSize: MaterialStatePropertyAll(
+                                    Size(size.width, 46)),
                                 shape: MaterialStatePropertyAll(
                                     RoundedRectangleBorder(
                                         borderRadius:
