@@ -22,12 +22,10 @@ class WelcomeScreen extends StatelessWidget {
             height: size.height,
             width: size.width,
             // padding: EdgeInsets.only(top: 65, bottom: 20, left: 20, right: 20),
-            decoration: BoxDecoration(color: Colors.white),
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover, image: AssetImage('asset/images/Welcome Screen .png'))),
             child: Stack(children: [
-              Positioned(
-                  top: 0,
-                  left: 220,
-                  child: Image.asset('asset/images/Ellipse 1.png')),
               Align(
                 alignment: Alignment(0, -1),
                 child: Image.asset('asset/images/welcome image.png'),
