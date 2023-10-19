@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -36,12 +36,10 @@ class _LoginScreenState extends State<LoginScreen> {
               height: size.height,
               width: size.width,
               // padding: EdgeInsets.only(top: 65, bottom: 20, left: 20, right: 20),
-              decoration: BoxDecoration(color: Colors.white),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover, image: AssetImage('asset/images/Welcome Screen .png'))),
               child: Stack(children: [
-                Positioned(
-                    top: 0,
-                    left: 220,
-                    child: Image.asset('asset/images/Ellipse 1.png')),
                 Align(
                   alignment: Alignment(0, -0.88),
                   child: Container(
@@ -77,20 +75,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         ]),
                   ),
                 ),
-                Positioned(
-                  top: 302,
-                  bottom: 180,
-                  left: 20,
-                  right: 20,
+                Align(
+                  alignment: Alignment(0, 0),
                   child: Container(
                       // color: Colors.red,
                       height: 350,
-                      width: 345,
+                      width: 440,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter your email";
+                              } else if (!value.contains("@gmail")) {
+                                return "please enter a valid email";
+                              } else {
+                                return null;
+                              }
+                            },
                             key: ValueKey('email'),
                             onSaved: (newValue) {
                               setState(() {
@@ -110,6 +114,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             height: 10,
                           ),
                           TextFormField(
+
+                            validator: (value) {
+                              RegExp regex = RegExp(
+                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                              if (value!.isEmpty) {
+                                return "Please enter your password";
+                              } else {
+                                if (!regex.hasMatch(value)) {
+                                  return 'Enter valid password';
+                                } else {
+                                  return null;
+                                }
+                              }
+                            },
                             key: ValueKey('password'),
                             onSaved: (newValue) {
                               setState(() {

@@ -23,7 +23,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return SafeArea(
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -36,12 +36,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
               height: size.height,
               width: size.width,
               // padding: EdgeInsets.only(top: 65, bottom: 20, left: 20, right: 20),
-              decoration: BoxDecoration(color: Colors.white),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover, image: AssetImage('asset/images/Welcome Screen .png'))),
               child: Stack(children: [
-                Positioned(
-                    top: 0,
-                    left: 220,
-                    child: Image.asset('asset/images/Ellipse 1.png')),
                 Align(
                   alignment: Alignment(0, -0.88),
                   child: Container(
@@ -77,15 +75,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ]),
                   ),
                 ),
-                Positioned(
-                  top: 302,
-                  bottom: 180,
-                  left: 20,
-                  right: 20,
+                Align(
+                  alignment: Alignment(0, 0),
                   child: Container(
                       // color: Colors.red,
                       height: 350,
-                      width: 345,
+                      width: 440,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
