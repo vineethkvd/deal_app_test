@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) {
               return HomePage();
             } else {
-              return LoginPage1();
+              return SplashScreen();
             }
           },
         ));
