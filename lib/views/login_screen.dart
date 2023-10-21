@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../services/authFunctionGoogle.dart';
 import '../services/authFunctionsEmailPassword.dart';
+import '../services/trainercodeemail/utils/fire_auth.dart';
 import 'home_page.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -13,11 +15,15 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  String email = '';
-  String password = '';
-  String fullname = '';
+
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
+
+  final _focusEmail = FocusNode();
+  final _focusPassword = FocusNode();
+
+  bool _isProcessing = false;
   bool passwordVisible = true;
-  // bool login = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -39,7 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
               // padding: EdgeInsets.only(top: 65, bottom: 20, left: 20, right: 20),
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      fit: BoxFit.cover, image: AssetImage('asset/images/Welcome Screen .png'))),
+                      fit: BoxFit.cover,
+                      image: AssetImage('asset/images/Welcome Screen .png'))),
               child: Stack(children: [
                 Align(
                   alignment: Alignment(0, -0.88),
@@ -86,6 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           TextFormField(
+                            controller: _emailTextController,
+                            focusNode: _focusEmail,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Please enter your email";
@@ -95,14 +104,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 return null;
                               }
                             },
-                            key: ValueKey('email'),
-                            onSaved: (newValue) {
-                              setState(() {
-                                email = newValue!;
-                              });
-                            },
                             decoration: InputDecoration(
-                              prefixIcon:Icon(Icons.email),
+                                prefixIcon: Icon(Icons.email),
                                 border: OutlineInputBorder(),
                                 label: Text(
                                   "Email",
@@ -116,12 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           TextFormField(
                             obscureText: passwordVisible,
-                            key: ValueKey('password'),
-                            onSaved: (newValue) {
-                              setState(() {
-                                password = newValue!;
-                              });
-                            },
+                            controller: _passwordTextController,
+                            focusNode: _focusPassword,
                             validator: (value) {
                               RegExp regex = RegExp(
                                 r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
@@ -167,9 +166,29 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           ElevatedButton(
                               onPressed: () async {
+                                _focusEmail.unfocus();
+                                _focusPassword.unfocus();
+
                                 if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
-                                  AuthServices.signinUser(email, password, context);
+                                  setState(() {
+                                    _isProcessing = true;
+                                  });
+                                  User? user =
+                                      await FireAuth.signInUsingEmailPassword(
+                                    email: _emailTextController.text,
+                                    password: _passwordTextController.text,
+                                  );
+                                  setState(() {
+                                    _isProcessing = false;
+                                  });
+
+                                  if (user != null) {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                        builder: (context) => HomePage(),
+                                      ),
+                                    );
+                                  }
                                 }
                               },
                               style: ButtonStyle(

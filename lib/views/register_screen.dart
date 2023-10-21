@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../services/authFunctionGoogle.dart';
 import '../services/authFunctionsEmailPassword.dart';
+import '../services/trainercodeemail/utils/fire_auth.dart';
+import 'emailvalidationpage.dart';
 import 'home_page.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -12,12 +15,17 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final _formKey = GlobalKey<FormState>();
-  String email = '';
-  String password = '';
-  String fullname = '';
-  bool login = false;
+  final _registerFormKey = GlobalKey<FormState>();
+  final _nameTextController = TextEditingController();
+  final _emailTextController = TextEditingController();
+  final _passwordTextController = TextEditingController();
+
+  final _focusName = FocusNode();
+  final _focusEmail = FocusNode();
+  final _focusPassword = FocusNode();
   bool passwordVisible = true;
+
+  bool _isProcessing = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -32,7 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Form(
-            key: _formKey,
+            key: _registerFormKey,
             child: Container(
               height: size.height,
               width: size.width,
@@ -89,12 +97,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextFormField(
-                            key: ValueKey('fullname'),
-                            onSaved: (newValue) {
-                              setState(() {
-                                fullname = newValue!;
-                              });
-                            },
+                            controller: _nameTextController,
+                            focusNode: _focusName,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Name should not be empty";
@@ -115,12 +119,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 26,
                           ),
                           TextFormField(
-                            key: ValueKey('email'),
-                            onSaved: (newValue) {
-                              setState(() {
-                                email = newValue!;
-                              });
-                            },
+                            controller: _emailTextController,
+                            focusNode: _focusEmail,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "Please enter your email";
@@ -145,13 +145,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 26,
                           ),
                           TextFormField(
-                            obscureText: passwordVisible,
-                            key: ValueKey('password'),
-                            onSaved: (newValue) {
-                              setState(() {
-                                password = newValue!;
-                              });
-                            },
+                            controller: _passwordTextController,
+                            focusNode: _focusPassword,
                             validator: (value) {
                               RegExp regex = RegExp(
                                 r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
@@ -185,9 +180,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           ElevatedButton(
                               onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  _formKey.currentState!.save();
-                                  AuthServices.signupUser(email, password, fullname, context);
+                                setState(() {
+                                  _isProcessing = true;
+                                });
+                                if (_registerFormKey.currentState!.validate()) {
+                                  User? user =
+                                      await FireAuth.registerUsingEmailPassword(
+                                    name: _nameTextController.text,
+                                    email: _emailTextController.text,
+                                    password: _passwordTextController.text,
+                                  );
+                                  setState(() {
+                                    _isProcessing = false;
+                                  });
+                                  if (user != null) {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) {
+                                        return EmailValidationPage(user: user);
+                                      },
+                                    ));
+                                  }
                                 }
                               },
                               style: ButtonStyle(
@@ -221,9 +234,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       fontSize: 14),
                                 ),
                               )),
-                          SizedBox(
-                            height: 10
-                          )
+                          SizedBox(height: 10)
                         ],
                       )),
                 ),

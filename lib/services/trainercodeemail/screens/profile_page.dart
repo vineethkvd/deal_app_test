@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../utils/fire_auth.dart';
 import 'login_page.dart';
 
-
 class ProfilePage extends StatefulWidget {
   final User user;
 
@@ -51,14 +50,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     'Email verified',
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .copyWith(color: Colors.green),
                   )
                 : Text(
                     'Email not verified',
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText1!
+                        .bodyLarge!
                         .copyWith(color: Colors.red),
                   ),
             SizedBox(height: 16.0),
