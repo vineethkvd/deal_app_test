@@ -58,14 +58,14 @@ class WelcomeScreen extends StatelessWidget {
                           "Explore all the existing job roles based on your",
                           style: TextStyle(
                               fontSize: 14,
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w600,
                               fontFamily: ' Poppins-Regular'),
                         ),
                         Text(
                           "interest and study major",
                           style: TextStyle(
                               fontSize: 14,
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w600,
                               fontFamily: ' Poppins-Regular'),
                         )
                       ]),

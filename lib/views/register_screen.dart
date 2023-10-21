@@ -17,6 +17,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String password = '';
   String fullname = '';
   bool login = false;
+  bool passwordVisible = true;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -38,7 +39,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               // padding: EdgeInsets.only(top: 65, bottom: 20, left: 20, right: 20),
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      fit: BoxFit.cover, image: AssetImage('asset/images/Welcome Screen .png'))),
+                      fit: BoxFit.cover,
+                      image: AssetImage('asset/images/Welcome Screen .png'))),
               child: Stack(children: [
                 Align(
                   alignment: Alignment(0, -0.88),
@@ -79,10 +81,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   alignment: Alignment(0, 0),
                   child: Container(
                       // color: Colors.red,
-                      height: 350,
-                      width: 440,
+                      width: 357,
+                      height: 520,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextFormField(
                             key: ValueKey('fullname'),
@@ -97,6 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               }
                             },
                             decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.person),
                                 border: OutlineInputBorder(),
                                 hintText: "Enter the name",
                                 label: Text(
@@ -107,7 +112,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 )),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 26,
                           ),
                           TextFormField(
                             key: ValueKey('email'),
@@ -126,6 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               }
                             },
                             decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.email),
                                 hintText: "Enter the email",
                                 border: OutlineInputBorder(),
                                 label: Text(
@@ -136,9 +142,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 )),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 26,
                           ),
                           TextFormField(
+                            obscureText: passwordVisible,
                             key: ValueKey('password'),
                             onSaved: (newValue) {
                               setState(() {
@@ -147,36 +154,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             validator: (value) {
                               RegExp regex = RegExp(
-                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
+                              );
                               if (value!.isEmpty) {
                                 return "Please enter your password";
-                              } else {
-                                if (!regex.hasMatch(value)) {
-                                  return 'Enter valid password';
-                                } else {
-                                  return null;
-                                }
+                              } else if (!regex.hasMatch(value)) {
+                                return 'Enter a valid password';
                               }
+                              return null;
                             },
                             decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: "Enter the password",
-                                label: Text(
-                                  "Password",
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins-Regular',
-                                  ),
-                                )),
+                              prefixIcon: Icon(Icons.lock),
+                              suffixIcon: IconButton(
+                                icon: Icon(passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                                onPressed: () {
+                                  setState(() {
+                                    passwordVisible = !passwordVisible;
+                                  });
+                                },
+                              ),
+                              border: OutlineInputBorder(),
+                              hintText: "Enter the password",
+                              labelText: "Password",
+                            ),
                           ),
                           SizedBox(
-                            height: 15,
+                            height: 53,
                           ),
                           ElevatedButton(
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
-                                  AuthServices.signupUser(
-                                      email, password, fullname, context);
+                                  AuthServices.signupUser(email, password, fullname, context);
                                 }
                               },
                               style: ButtonStyle(
@@ -197,17 +208,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     fontWeight: FontWeight.w600),
                               )),
                           SizedBox(
-                            height: 8,
+                            height: 30,
                           ),
                           TextButton(
                               onPressed: () {},
-                              child: Text(
-                                "Already have an account",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'Poppins-Regular',
-                                    fontSize: 14),
-                              ))
+                              child: Center(
+                                child: Text(
+                                  "Already have an account",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: 'Poppins-Regular',
+                                      fontSize: 14),
+                                ),
+                              )),
+                          SizedBox(
+                            height: 10
+                          )
                         ],
                       )),
                 ),

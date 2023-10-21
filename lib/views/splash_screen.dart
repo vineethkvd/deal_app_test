@@ -37,44 +37,54 @@ class _SplashScreenState extends State<SplashScreen> {
         decoration: BoxDecoration(
             image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage('asset/images/Splash Screen.png'))),
+                image: AssetImage('asset/images/On boarding.png'))),
         child: Stack(children: [
           Align(
-            alignment: Alignment(0, 0.7),
+            alignment: Alignment(0, 0.15),
             child: Container(
-                height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('asset/images/logo.png'),
-                    SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      "OFFER",
-                      style: TextStyle(
-                          color: Color(0xFFC50000),
-                          fontSize: 40,
-                          fontWeight: FontWeight.w900,
-                          fontFamily: ' Poppins-SemiBold'),
-                    ),
-                    SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      "NINJA",
-                      style: TextStyle(
-                          color: Color(0xBD5E0000),
-                          fontSize: 40,
-                          fontWeight: FontWeight.w900,
-                          fontFamily: ' Poppins-SemiBold'),
-                    )
-                  ],
-                )),
+              child: Text(
+                "Deal Ninja",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 38,
+                    fontFamily: 'Outfit-SemiBold',
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
           ),
           Align(
-            alignment: Alignment(0, 0.93),
-            child: Container(child: CircularProgressIndicator(color: Color(0xFFBB6B00),)),
+            alignment: Alignment(0, 0.35),
+            child: Container(
+              height: 60,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Unlock Your Savings Superpowers",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontFamily: 'Outfit-SemiBold',
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    "with Deal Ninja App!",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontFamily: 'Outfit-SemiBold',
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment(0, 0.8),
+            child: Container(
+              child: CircularProgressIndicator(color: Color(0xFFCFFF0F),),
+            ),
           )
         ]),
       ),

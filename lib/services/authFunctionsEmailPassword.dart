@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:deal_app_test/views/home_page.dart';
-import 'package:deal_app_test/views/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +14,6 @@ class AuthServices {
       await FirestoreServices.saveUser(name, email, userCredential.user!.uid);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Registration Successful')));
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen(),));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -38,8 +35,6 @@ class AuthServices {
 
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('You are Logged in')));
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomePage(),));
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(

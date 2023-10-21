@@ -16,6 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String email = '';
   String password = '';
   String fullname = '';
+  bool passwordVisible = true;
   // bool login = false;
   @override
   Widget build(BuildContext context) {
@@ -78,12 +79,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 Align(
                   alignment: Alignment(0, 0),
                   child: Container(
-                      // color: Colors.red,
-                      height: 350,
-                      width: 440,
+                      width: 357,
+                      height: 480,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           TextFormField(
                             validator: (value) {
@@ -102,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               });
                             },
                             decoration: InputDecoration(
+                              prefixIcon:Icon(Icons.email),
                                 border: OutlineInputBorder(),
                                 label: Text(
                                   "Email",
@@ -111,40 +112,46 @@ class _LoginScreenState extends State<LoginScreen> {
                                 )),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 29,
                           ),
                           TextFormField(
-
-                            validator: (value) {
-                              RegExp regex = RegExp(
-                                  r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-                              if (value!.isEmpty) {
-                                return "Please enter your password";
-                              } else {
-                                if (!regex.hasMatch(value)) {
-                                  return 'Enter valid password';
-                                } else {
-                                  return null;
-                                }
-                              }
-                            },
+                            obscureText: passwordVisible,
                             key: ValueKey('password'),
                             onSaved: (newValue) {
                               setState(() {
                                 password = newValue!;
                               });
                             },
+                            validator: (value) {
+                              RegExp regex = RegExp(
+                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
+                              );
+                              if (value!.isEmpty) {
+                                return "Please enter your password";
+                              } else if (!regex.hasMatch(value)) {
+                                return 'Enter a valid password';
+                              }
+                              return null;
+                            },
                             decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                label: Text(
-                                  "Password",
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins-Regular',
-                                  ),
-                                )),
+                              prefixIcon: Icon(Icons.lock),
+                              suffixIcon: IconButton(
+                                icon: Icon(passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                                onPressed: () {
+                                  setState(() {
+                                    passwordVisible = !passwordVisible;
+                                  });
+                                },
+                              ),
+                              border: OutlineInputBorder(),
+                              hintText: "Enter the password",
+                              labelText: "Password",
+                            ),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 30,
                           ),
                           TextButton(
                               onPressed: () {},
@@ -156,14 +163,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                     fontSize: 14),
                               )),
                           SizedBox(
-                            height: 10,
+                            height: 30,
                           ),
                           ElevatedButton(
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   _formKey.currentState!.save();
-                                  AuthServices.signinUser(
-                                      email, password, context);
+                                  AuthServices.signinUser(email, password, context);
                                 }
                               },
                               style: ButtonStyle(
@@ -184,7 +190,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     fontWeight: FontWeight.w600),
                               )),
                           SizedBox(
-                            height: 8,
+                            height: 30,
                           ),
                           Center(
                             child: TextButton(

@@ -1,3 +1,4 @@
+import 'package:deal_app_test/services/trainercodeemail/screens/login_page.dart';
 import 'package:deal_app_test/views/home_page.dart';
 import 'package:deal_app_test/views/splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) {
               return HomePage();
             } else {
-              return SplashScreen();
+              return LoginPage1();
             }
           },
         ));

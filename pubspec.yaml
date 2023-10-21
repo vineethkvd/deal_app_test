@@ -42,6 +42,7 @@ dependencies:
   firebase_auth: ^4.10.1
   easy_search_bar: ^2.5.0
   cloud_firestore: ^4.10.0
+  pinput: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +89,12 @@ flutter:
      - family: Poppins-SemiBold
        fonts:
          - asset: asset/fonts/Poppins-SemiBold.ttf
+     - family: Outfit-SemiBold
+       fonts:
+         - asset: asset/fonts/Outfit-SemiBold.ttf
+     - family: Outfit-Medium
+       fonts:
+         - asset: asset/fonts/Outfit-Medium.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
