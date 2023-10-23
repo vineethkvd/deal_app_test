@@ -263,10 +263,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   onPressed: () {
                                     signInWithGoogle().then((result) {
                                       if (result != null) {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) => HomePage(),
-                                        ));
+                                        Navigator.of(context).pushNamedAndRemoveUntil('/HomePage', (route) => false);
                                       }
                                     });
                                     print("clicked");

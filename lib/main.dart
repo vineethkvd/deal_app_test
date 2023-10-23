@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
         routes: {
           '/SplashScreen':(context) => SplashScreen(),
           '/LoginScreen':(context) => LoginScreen(),
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
             User? user = FirebaseAuth.instance.currentUser;
             return EmailValidationPage(user: user!);
           },
+          '/HomePage':(context) =>HomePage(),
         },
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),

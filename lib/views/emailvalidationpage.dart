@@ -50,7 +50,11 @@ class _EmailValidationPageState extends State<EmailValidationPage> {
                 Align(
                   alignment: Alignment(0, -0.7),
                   child: Container(
-                      child: Image.asset('asset/images/icons8-email-64.png',height: 250,width: 400,)),
+                      child: Image.asset(
+                    'asset/images/icons8-email-64.png',
+                    height: 250,
+                    width: 400,
+                  )),
                 ),
                 Align(
                   alignment: Alignment(0, -0.4),
@@ -86,7 +90,7 @@ class _EmailValidationPageState extends State<EmailValidationPage> {
                           SizedBox(height: 16.0),
                           Text(
                             'EMAIL: ${_currentUser.email}',
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                           SizedBox(height: 16.0),
                           _currentUser.emailVerified
@@ -135,6 +139,12 @@ class _EmailValidationPageState extends State<EmailValidationPage> {
                                           setState(() {
                                             _currentUser = user;
                                           });
+                                        }
+                                        if (_currentUser.emailVerified) {
+                                          Navigator.of(context)
+                                              .pushNamedAndRemoveUntil(
+                                                  '/HomePage',
+                                                  (route) => false);
                                         }
                                       },
                                     ),
