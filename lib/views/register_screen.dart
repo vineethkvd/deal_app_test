@@ -195,11 +195,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   });
                                   if (user != null) {
                                     Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) {
-                                        return EmailValidationPage(user: user);
-                                      },
-                                    ));
+                                        .pushNamedAndRemoveUntil(
+                                            '/EmailValidationPage',
+                                            (route) => false);
                                   }
                                 }
                               },
@@ -224,7 +222,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             height: 30,
                           ),
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    '/LoginScreen', (route) => false);
+                              },
                               child: Center(
                                 child: Text(
                                   "Already have an account",

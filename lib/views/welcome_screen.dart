@@ -24,7 +24,8 @@ class WelcomeScreen extends StatelessWidget {
             // padding: EdgeInsets.only(top: 65, bottom: 20, left: 20, right: 20),
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    fit: BoxFit.cover, image: AssetImage('asset/images/Welcome Screen .png'))),
+                    fit: BoxFit.cover,
+                    image: AssetImage('asset/images/Welcome Screen .png'))),
             child: Stack(children: [
               Align(
                 alignment: Alignment(0, -1),
@@ -75,55 +76,59 @@ class WelcomeScreen extends StatelessWidget {
                 alignment: Alignment(0, 0.8),
                 child: Container(
                   height: 60,
-                  child:
-                      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
-                          ));
-                        },
-                        style: ButtonStyle(
-                            minimumSize: MaterialStatePropertyAll(Size(140, 46)),
-                            shape: MaterialStatePropertyAll(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(9))),
-                            backgroundColor:
-                                MaterialStatePropertyAll(Color(0xFF1F41BB))),
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Poppins-Regular',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600),
-                        )),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => RegisterScreen(),
-                          ));
-                        },
-                        style: ButtonStyle(
-                            overlayColor: MaterialStateProperty.all(Color(0xFF1F41BB)),
-                            minimumSize: MaterialStatePropertyAll(Size(140, 46)),
-                            shape: MaterialStatePropertyAll(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(9))),
-                            backgroundColor:
-                                MaterialStatePropertyAll(Color(0xFF595959))),
-                        child: Text(
-                          "Register",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Poppins-Regular',
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600),
-                        )),
-                  ]),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  '/LoginScreen', (route) => false);
+                            },
+                            style: ButtonStyle(
+                                minimumSize:
+                                    MaterialStatePropertyAll(Size(140, 46)),
+                                shape: MaterialStatePropertyAll(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(9))),
+                                backgroundColor: MaterialStatePropertyAll(
+                                    Color(0xFF1F41BB))),
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Poppins-Regular',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600),
+                            )),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  '/RegisterScreen', (route) => false);
+                            },
+                            style: ButtonStyle(
+                                overlayColor: MaterialStateProperty.all(
+                                    Color(0xFF1F41BB)),
+                                minimumSize:
+                                    MaterialStatePropertyAll(Size(140, 46)),
+                                shape: MaterialStatePropertyAll(
+                                    RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(9))),
+                                backgroundColor: MaterialStatePropertyAll(
+                                    Color(0xFF595959))),
+                            child: Text(
+                              "Register",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Poppins-Regular',
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600),
+                            )),
+                      ]),
                 ),
               )
             ]),

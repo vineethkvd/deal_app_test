@@ -1,6 +1,10 @@
 import 'package:deal_app_test/services/trainercodeemail/screens/login_page.dart';
+import 'package:deal_app_test/views/emailvalidationpage.dart';
 import 'package:deal_app_test/views/home_page.dart';
+import 'package:deal_app_test/views/login_screen.dart';
+import 'package:deal_app_test/views/register_screen.dart';
 import 'package:deal_app_test/views/splash_screen.dart';
+import 'package:deal_app_test/views/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +21,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        routes: {
+          '/SplashScreen':(context) => SplashScreen(),
+          '/LoginScreen':(context) => LoginScreen(),
+          '/WelcomeScreen':(context) => WelcomeScreen(),
+          '/RegisterScreen':(context) => RegisterScreen(),
+          '/EmailValidationPage': (context) {
+            User? user = FirebaseAuth.instance.currentUser;
+            return EmailValidationPage(user: user!);
+          },
+        },
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {

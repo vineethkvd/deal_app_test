@@ -213,7 +213,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Center(
                             child: TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      '/RegisterScreen', (route) => false);
+                                },
                                 child: Text(
                                   "Create new account",
                                   style: TextStyle(
