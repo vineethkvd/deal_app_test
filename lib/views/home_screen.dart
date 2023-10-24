@@ -29,12 +29,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          child: Obx((){
+          child: Obx(() {
             var currentIndex = controller.currentIndex.value;
             return Container(
               height: size.height,
               width: size.width,
-              // padding: EdgeInsets.only(top: 65, bottom: 20, left: 20, right: 20),
               decoration: BoxDecoration(color: Colors.white),
               child: Stack(children: [
                 Positioned(
@@ -137,55 +136,95 @@ class _HomeScreenState extends State<HomeScreen> {
                     left: 10,
                     right: 10,
                     top: 280,
-                    bottom: 0,
+                    bottom: 160,
                     child: Container(
                         child: GridView.builder(
-                          shrinkWrap: false,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                          ),
-                          scrollDirection: Axis.vertical,
-                          padding: EdgeInsets.all(0),
-                          itemCount: controller.items.length,
-                          itemBuilder: (context, index) {
-                            final DocumentSnapshot productSnap = controller.items[index];
-                            return Card(
-                              elevation: 3,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                      padding: const EdgeInsets.all(10),
+                      shrinkWrap: false,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: .60,
+                        mainAxisSpacing: 4.0,
+                        crossAxisSpacing: 10,
+                      ),
+                      scrollDirection: Axis.vertical,
+                      itemCount: controller.items.length,
+                      itemBuilder: (context, index) {
+                        final DocumentSnapshot productSnap =
+                            controller.items[index];
+                        return Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.withOpacity(.5),
+                                    offset: Offset(3, 2),
+                                    blurRadius: 7)
+                              ]),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      topRight: Radius.circular(15),
+                                    ),
+                                    child: Image.network(
+                                      '${productSnap['image']}',
+                                      width: double.infinity,
+                                    )),
+                              ),
+                              Text(
+                                '${productSnap['name']}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                '${productSnap['brand']}',
+                                style: TextStyle(
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Image.network(
-                                    '${productSnap['image']}',
-                                    fit: BoxFit.cover,
-                                    height: 150, // Adjust image height as needed
-                                  ),
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.only(left: 8.0),
                                     child: Text(
-                                      '${productSnap['name']}',
+                                      '₹ ${productSnap['price']}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      '${productSnap['price']}', // Display price with 2 decimal places
-                                      style: TextStyle(
-                                        color: Colors.green,
-                                        fontSize: 18,
-                                      ),
-                                    ),
+                                  SizedBox(
+                                    width: 30,
                                   ),
+                                  IconButton(
+                                      icon: Icon(Icons.add_shopping_cart),
+                                      onPressed: () {
+                                        final DocumentSnapshot selectedProduct =
+                                            controller.items[index];
+                                        controller.addToCart(selectedProduct);
+                                      })
                                 ],
                               ),
-                            );
-                          },
-                        )))
+                            ],
+                          ),
+                        );
+                      },
+                    )))
               ]),
             );
           }),

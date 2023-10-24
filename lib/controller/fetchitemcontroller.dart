@@ -8,18 +8,28 @@ class FetchItemController extends GetxController {
       FirebaseFirestore.instance.collection('products');
   final CollectionReference banner =
       FirebaseFirestore.instance.collection('banner');
+  final CollectionReference cart =
+  FirebaseFirestore.instance.collection('cartitems');
   final RxList<DocumentSnapshot> items = <DocumentSnapshot>[].obs;
+  final RxList<DocumentSnapshot> cartItems = <DocumentSnapshot>[].obs;
   final RxList<DocumentSnapshot> banners = <DocumentSnapshot>[].obs;
   @override
   void onInit() {
     super.onInit();
-    fetchTasks();
+    displayCartItems();
+    displayProducts();
+  }
+  Future<void> addToCart(DocumentSnapshot data) async {
+    await cart.add(data.data());
+    print("Added");
+  }
+  Future<void> displayCartItems() async {
+    final snapshot = await cart.orderBy('id').get();
+    cartItems.assignAll(snapshot.docs);
   }
 
-  Future<void> fetchTasks() async {
+  Future<void> displayProducts() async {
     final snapshot = await products.orderBy('id').get();
     items.assignAll(snapshot.docs);
-    final bannerSnapshot = await products.orderBy('id').get();
-    items.assignAll(bannerSnapshot.docs);
   }
 }
