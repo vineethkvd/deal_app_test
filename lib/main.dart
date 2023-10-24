@@ -1,6 +1,8 @@
 import 'package:deal_app_test/services/trainercodeemail/screens/login_page.dart';
+import 'package:deal_app_test/test/fetchtestdata.dart';
 import 'package:deal_app_test/views/emailvalidationpage.dart';
 import 'package:deal_app_test/views/home_page.dart';
+import 'package:deal_app_test/views/home_screen.dart';
 import 'package:deal_app_test/views/login_screen.dart';
 import 'package:deal_app_test/views/register_screen.dart';
 import 'package:deal_app_test/views/splash_screen.dart';

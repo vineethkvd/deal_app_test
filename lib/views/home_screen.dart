@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,6 +18,24 @@ class _HomeScreenState extends State<HomeScreen> {
     'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
     'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
   ];
+
+  final CollectionReference products =
+      FirebaseFirestore.instance.collection('products');
+  List<DocumentSnapshot> items = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchTasks();
+  }
+
+  void fetchTasks() async {
+    QuerySnapshot snapshot = await products.orderBy('id').get();
+    setState(() {
+      items = snapshot.docs;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -88,7 +107,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: imgList.asMap().entries.map((entry) {
                           return GestureDetector(
-                            onTap: () => carouselController.animateToPage(entry.key),
+                            onTap: () =>
+                                carouselController.animateToPage(entry.key),
                             child: Container(
                               width: currentIndex == entry.key ? 17 : 7,
                               height: 7.0,
@@ -105,14 +125,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           );
                         }).toList(),
                       ),
-
                     ],
                   ),
                 ),
               ),
-
-             Positioned(
-               top: 240,
+              Positioned(
+                top: 240,
                 left: 20,
                 bottom: 0,
                 right: 0,
@@ -134,58 +152,53 @@ class _HomeScreenState extends State<HomeScreen> {
                   top: 280,
                   bottom: 0,
                   child: Container(
-
-                    child: GridView.builder(
-                      shrinkWrap: false,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                      scrollDirection: Axis.vertical,
-                      padding: EdgeInsets.all(0),
-                      itemCount: 24,
-                      itemBuilder: (context, index) {
-                        return Container(
-                            // padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Color(0x91595959),
-                                width: 2.0,
+                      child: GridView.builder(
+                    shrinkWrap: false,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                    ),
+                    scrollDirection: Axis.vertical,
+                    padding: EdgeInsets.all(0),
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final DocumentSnapshot productSnap = items[index];
+                      return Card(
+                        elevation: 3,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.network(
+                              '${productSnap['image']}',
+                              fit: BoxFit.cover,
+                              height: 150, // Adjust image height as needed
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${productSnap['name']}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Container(
-                                      height: 95,
-                                      width: 140,
-                                      // color: Colors.red,
-                                      child: Center(
-                                        child: Image(
-                                          fit: BoxFit.cover,
-                                            image: AssetImage(
-                                                'asset/images/acerlap.png')),
-                                      ),
-                                    ),
-                                  ),
-                                  // SizedBox(height: 7,),
-                                  ListTile(
-                                    title: Text("Lenovo laptop"),
-                                    subtitle: Text("₹3200 only"),
-                                  )
-                                ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                '${productSnap['price']}', // Display price with 2 decimal places
+                                style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 18,
+                                ),
                               ),
-                            ));
-                      },
-                    ),
-                  ))
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  )))
             ]),
           ),
         ),
