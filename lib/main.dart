@@ -1,4 +1,5 @@
 import 'package:deal_app_test/services/trainercodeemail/screens/login_page.dart';
+import 'package:deal_app_test/test.dart';
 import 'package:deal_app_test/views/emailvalidationpage.dart';
 import 'package:deal_app_test/views/home_page.dart';
 import 'package:deal_app_test/views/home_screen.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
             if (snapshot.hasData) {
               return HomePage();
             } else {
-              return SplashScreen();
+              return HomePage();
             }
           },
         ));

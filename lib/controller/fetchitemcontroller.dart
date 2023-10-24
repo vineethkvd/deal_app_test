@@ -6,7 +6,10 @@ class FetchItemController extends GetxController {
   final RxInt currentIndex = 0.obs;
   final CollectionReference products =
       FirebaseFirestore.instance.collection('products');
+  final CollectionReference banner =
+      FirebaseFirestore.instance.collection('banner');
   final RxList<DocumentSnapshot> items = <DocumentSnapshot>[].obs;
+  final RxList<DocumentSnapshot> banners = <DocumentSnapshot>[].obs;
   @override
   void onInit() {
     super.onInit();
@@ -16,5 +19,7 @@ class FetchItemController extends GetxController {
   Future<void> fetchTasks() async {
     final snapshot = await products.orderBy('id').get();
     items.assignAll(snapshot.docs);
+    final bannerSnapshot = await products.orderBy('id').get();
+    items.assignAll(bannerSnapshot.docs);
   }
 }
