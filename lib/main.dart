@@ -1,5 +1,4 @@
 import 'package:deal_app_test/services/trainercodeemail/screens/login_page.dart';
-import 'package:deal_app_test/test/fetchtestdata.dart';
 import 'package:deal_app_test/views/emailvalidationpage.dart';
 import 'package:deal_app_test/views/home_page.dart';
 import 'package:deal_app_test/views/home_screen.dart';
@@ -10,6 +9,7 @@ import 'package:deal_app_test/views/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
         routes: {
           '/SplashScreen':(context) => SplashScreen(),

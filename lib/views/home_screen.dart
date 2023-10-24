@@ -3,6 +3,10 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../controller/fetchitemcontroller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,30 +23,14 @@ class _HomeScreenState extends State<HomeScreen> {
     'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
   ];
 
-  final CollectionReference products =
-      FirebaseFirestore.instance.collection('products');
-  List<DocumentSnapshot> items = [];
-
-  @override
-  void initState() {
-    super.initState();
-    fetchTasks();
-  }
-
-  void fetchTasks() async {
-    QuerySnapshot snapshot = await products.orderBy('id').get();
-    setState(() {
-      items = snapshot.docs;
-    });
-  }
-
+  final FetchItemController controller = Get.put(FetchItemController());
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
-          child: Container(
+          child: Obx(() => Container(
             height: size.height,
             width: size.width,
             // padding: EdgeInsets.only(top: 65, bottom: 20, left: 20, right: 20),
@@ -153,54 +141,54 @@ class _HomeScreenState extends State<HomeScreen> {
                   bottom: 0,
                   child: Container(
                       child: GridView.builder(
-                    shrinkWrap: false,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    scrollDirection: Axis.vertical,
-                    padding: EdgeInsets.all(0),
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      final DocumentSnapshot productSnap = items[index];
-                      return Card(
-                        elevation: 3,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.network(
-                              '${productSnap['image']}',
-                              fit: BoxFit.cover,
-                              height: 150, // Adjust image height as needed
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                '${productSnap['name']}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                '${productSnap['price']}', // Display price with 2 decimal places
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ],
+                        shrinkWrap: false,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
                         ),
-                      );
-                    },
-                  )))
+                        scrollDirection: Axis.vertical,
+                        padding: EdgeInsets.all(0),
+                        itemCount: controller.items.length,
+                        itemBuilder: (context, index) {
+                          final DocumentSnapshot productSnap = controller.items[index];
+                          return Card(
+                            elevation: 3,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Image.network(
+                                  '${productSnap['image']}',
+                                  fit: BoxFit.cover,
+                                  height: 150, // Adjust image height as needed
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    '${productSnap['name']}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    '${productSnap['price']}', // Display price with 2 decimal places
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      )))
             ]),
-          ),
+          )),
         ),
       ),
     );
