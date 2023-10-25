@@ -23,6 +23,11 @@ class FetchItemController extends GetxController {
     await cart.add(data.data());
     print("Added");
   }
+  Future<void> displayBanners() async {
+    final snapshot = await banner.orderBy('id').get();
+    banners.assignAll(snapshot.docs);
+
+  }
   Future<void> displayCartItems() async {
     final snapshot = await cart.orderBy('id').get();
     cartItems.assignAll(snapshot.docs);

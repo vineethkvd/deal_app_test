@@ -18,8 +18,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   CarouselController carouselController = CarouselController();
   final List<String> imgList = [
-    'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
+'https://firebasestorage.googleapis.com/v0/b/dealapptestproject.appspot.com/o/banner%201.png?alt=media&token=7cfa1d0c-92db-4d68-b23f-89ebb4253b57&_gl=1*1yi2jmn*_ga*NzM2ODU1NTcxLjE2OTUwNDcwMzk.*_ga_CW55HF8NVT*MTY5ODIxNTQwOC45LjEuMTY5ODIxNTQ1NS4xMy4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/dealapptestproject.appspot.com/o/banner%202.png?alt=media&token=7c61cd53-608c-4606-9b8a-37730dd2b039&_gl=1*1ety3xf*_ga*NzM2ODU1NTcxLjE2OTUwNDcwMzk.*_ga_CW55HF8NVT*MTY5ODIxNTQwOC45LjEuMTY5ODIxNTQ4MS42MC4wLjA.',
+    'https://firebasestorage.googleapis.com/v0/b/dealapptestproject.appspot.com/o/banner%203.png?alt=media&token=895d2d66-25a9-44a5-9428-6e952a99dff4&_gl=1*1g0rryh*_ga*NzM2ODU1NTcxLjE2OTUwNDcwMzk.*_ga_CW55HF8NVT*MTY5ODIxNTQwOC45LjEuMTY5ODIxNTU5MS42MC4wLjA.'
   ];
 
   final FetchItemController controller = Get.put(FetchItemController());
@@ -116,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 240,
+                  top: 280,
                   left: 20,
                   bottom: 0,
                   right: 0,
@@ -135,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Positioned(
                     left: 10,
                     right: 10,
-                    top: 280,
+                    top: 300,
                     bottom: 160,
                     child: Container(
                         child: GridView.builder(
