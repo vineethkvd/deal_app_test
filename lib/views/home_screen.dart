@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deal_app_test/views/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -144,8 +145,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       shrinkWrap: false,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: .60,
-                        mainAxisSpacing: 4.0,
+                        childAspectRatio: .58,
+                        mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
                       ),
                       scrollDirection: Axis.vertical,
@@ -215,10 +216,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   IconButton(
                                       icon: Icon(Icons.add_shopping_cart),
                                       onPressed: () {
-                                        final DocumentSnapshot selectedProduct =
-                                            controller.items[index];
-                                        controller.addToCart(selectedProduct);
-                                      })
+                                        final DocumentSnapshot selectedProduct = controller.items[index];
+                                        controller.addCartItem(selectedProduct);
+                                        print('$selectedProduct');
+                                      }
+                                  )
                                 ],
                               ),
                             ],

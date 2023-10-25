@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import '../controller/fetchitemcontroller.dart';
 
 class CartScreen extends StatefulWidget {
-  const CartScreen({super.key});
+  final DocumentSnapshot? selectedProduct;
+
+  CartScreen({this.selectedProduct, Key? key}) : super(key: key);
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -17,9 +19,9 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Obx(() {
       return ListView.builder(
-        itemCount: controller.cartItems.length,
+        itemCount: controller.cartdatas.length,
         itemBuilder: (context, index) {
-          final DocumentSnapshot productSnap = controller.cartItems[index];
+          final DocumentSnapshot productSnap = controller.cartdatas[index];
           return Container(
             decoration: BoxDecoration(
                 color: Colors.white,

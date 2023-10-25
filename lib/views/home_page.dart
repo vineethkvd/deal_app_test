@@ -188,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                     width: 20,
                     height: 20,
                     image: AssetImage('asset/images/shopping-cart.png')),
-                label: "Account",
+                label: "Cart",
               ),
               BottomNavigationBarItem(
                 icon: Image(
